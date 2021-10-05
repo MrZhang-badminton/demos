@@ -34,7 +34,6 @@ public class NIOClient1 {
 				buffer.put(msg.getBytes(StandardCharsets.UTF_8));
 				buffer.flip();
 				channel.write(buffer);
-				channel.
 				buffer.clear();
 			}
 		} catch (IOException e) {
