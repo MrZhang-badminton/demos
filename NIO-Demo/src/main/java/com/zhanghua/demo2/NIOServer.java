@@ -1,6 +1,10 @@
 package com.zhanghua.demo2;
 
 /**
+ * 这个是正确示例
+ * 两者可以进行聊天
+ * 不过这个demo有个缺陷，就是只能一问一答，不支持一个人随时发言
+ *
  * @Description:
  * @Author: zhanghua
  * @Date: 2021/10/4 3:32 下午
@@ -154,7 +158,7 @@ public class NIOServer implements Runnable {
 
 	private void accept(SelectionKey key){
 		try {
-			// 此通道为init方法中注册到Seleor上的ServerSocketChannel
+			// 此通道为init方法中注册到Selector上的ServerSocketChannel
 			ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
 			// 阻塞方法，当客户端发起请求后返回.此通道和客户端一一对应
 			SocketChannel channel = serverSocketChannel.accept();
