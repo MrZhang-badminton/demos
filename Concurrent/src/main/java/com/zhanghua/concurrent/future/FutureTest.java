@@ -34,6 +34,7 @@ public class FutureTest {
 		for (int i = 0; i < 10; i++) {
 			futureList.add(submitProduceTask(() -> TestTask.produceProduct("Product")));
 		}
+
 		ThreadPoolUtils.shutDownProduceThreadPool();
 		futureList.stream().forEach(item -> {
 			try {

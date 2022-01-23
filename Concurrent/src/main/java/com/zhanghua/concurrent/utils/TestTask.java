@@ -16,13 +16,23 @@ public class TestTask {
 	 * @return 生产商品名+流水号
 	 */
 	public static String produceProduct(String productName) {
+
+		Integer randNum = new Random().nextInt(100);
+		String product = productName + randNum;
+		System.out.println("【Thread】---" + Thread.currentThread().getName() +"--" + product);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		String product =  productName + new Random().nextInt(100);
-		System.out.println(product + " is being produced");
 		return product;
+	}
+
+	public static void doSomething(){
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

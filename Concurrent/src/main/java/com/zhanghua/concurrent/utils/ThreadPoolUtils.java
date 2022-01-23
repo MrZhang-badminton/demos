@@ -12,6 +12,10 @@ public class ThreadPoolUtils {
 	private static ThreadPoolExecutor testPool = new ThreadPoolExecutor(10, 10, 1000, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
 
 
+	public static ThreadPoolExecutor getTestPool() {
+		return testPool;
+	}
+
 	public static Future<String> submitProduceTask(Callable<String> callableTask) {
 		return testPool.submit(callableTask);
 	}
