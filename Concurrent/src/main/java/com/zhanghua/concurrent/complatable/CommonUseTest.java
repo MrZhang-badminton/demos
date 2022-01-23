@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
  * @Description:
  * @Author: zhanghua
  * @Date: 2022/1/23 1:43 上午
+ * @Reference:
+ * 1. https://blog.krecan.net/2013/12/25/completablefutures-why-to-use-async-methods/
  */
 public class CommonUseTest extends AbsCommonTest{
 
