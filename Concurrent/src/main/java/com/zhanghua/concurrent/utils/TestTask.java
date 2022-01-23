@@ -35,4 +35,14 @@ public class TestTask {
 			e.printStackTrace();
 		}
 	}
+
+
+	public static void printSomething(String s){
+		try {
+			Thread.sleep(1000);
+			System.out.println("【Thread】---" + Thread.currentThread().getName() +"--" + s);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

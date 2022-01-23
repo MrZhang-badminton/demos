@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
  * @Author: zhanghua
  * @Date: 2022/1/23 4:44 下午
  */
-public class AsyncTest extends AbsCommonTest{
+public class AsyncTest extends AbsCommonTest {
 
 	/**
 	 * Async后缀测试
@@ -38,9 +38,9 @@ public class AsyncTest extends AbsCommonTest{
 
 
 	public static void test1_2() {
-		CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> TestTask.produceProduct("Apple"),getExecutor());
-		CompletableFuture<String> cf2 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Orange" + item),getExecutor());
-		CompletableFuture<String> cf3 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Banana" + item),getExecutor());
+		CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> TestTask.produceProduct("Apple"), getExecutor());
+		CompletableFuture<String> cf2 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Orange" + item), getExecutor());
+		CompletableFuture<String> cf3 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Banana" + item), getExecutor());
 		CompletableFuture.allOf(cf1, cf2, cf3).join();
 		shutDownExecutor();
 	}
@@ -48,15 +48,36 @@ public class AsyncTest extends AbsCommonTest{
 
 	public static void test1_3() {
 		CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> TestTask.produceProduct("Apple"));
-		CompletableFuture<String> cf2 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Orange" + item),getExecutor());
+		CompletableFuture<String> cf2 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Orange" + item), getExecutor());
 		CompletableFuture<String> cf3 = cf1.thenApplyAsync(item -> TestTask.produceProduct("Banana" + item));
 		CompletableFuture.allOf(cf1, cf2, cf3).join();
 		shutDownExecutor();
 	}
 
+
+	/**
+	 * cf1 -> (cf2 & cf3)
+	 */
+	public static void test2_1() {
+		CompletableFuture<Void> cf1 = CompletableFuture.runAsync(() -> TestTask.printSomething("AAA"));
+		CompletableFuture<Void> cf2 = cf1.thenRunAsync(() -> TestTask.printSomething("AAA_aaa"));
+		CompletableFuture<Void> cf3 = cf1.thenRunAsync(() -> TestTask.printSomething("AAA_bbb"));
+		CompletableFuture.allOf(cf2, cf3).join();
+
+	}
+
+	/**
+	 * cf1 -> cf2 -> cf3
+	 * 其实这边跟去掉async效果是一样的
+	 */
+	public static void test2_2() {
+		CompletableFuture<Void> cf1 = CompletableFuture.runAsync(() -> TestTask.printSomething("AAA"));
+		CompletableFuture<Void> cf2 = cf1.thenRunAsync(() -> TestTask.printSomething("AAA_aaa"))
+				.thenRunAsync(() -> TestTask.printSomething("AAA_bbb"));
+		cf2.join();
+	}
+
 	public static void main(String[] args) {
-		test1_1();
-		test1_2();
-		test1_3();
+		test2_2();
 	}
 }
